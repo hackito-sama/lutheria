@@ -1,0 +1,15 @@
+.product-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.product-gallery {
+    flex: 1;
+    /* Add styles for image and thumbnails */
+}
+
+.product-details {
+    flex: 1;
+    /* Add styles for text, price, and buttons */
+}

@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+body, html {
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* altura mínima igual a la pantalla */
+    margin: 0;
+}
+
+html{
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+main {
+    flex: 1; /* ocupa todo el espacio disponible empujando el footer hacia abajo */
+}
+
+nav {
+    background-color: #FFD700;
+    color: #000080;
+    padding: 15px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+footer.footer {
+    background-color: #FFD700;
+    color: #000080;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    /* sombra hacia arriba */
+}
+
+.bg-luth-yellow {
+    background-color: #FFD700;
+}
+
+.text-luth-blue {
+    color: #000080;
+}
+
+.bg-luth-blue {
+    background-color: #000080;
+}
+
+.border-luth-blue {
+    border-color: #000080;
+}
+
+p {
+    color: #555555;
+}
+
+.container {
+    max-width: 1200px;
+    /* ancho máximo */
+    margin: 0 auto;
+    /* centra horizontalmente */
+    padding: 0 20px;
+    /* espacio interno */
+}
+
+.footer {
+    background-color: #FFD700;
+    color: #000080;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.footer-content div {
+    margin: 10px;
+}
+
+.footer-content h3 {
+    margin-bottom: 5px;
+}
+
+.footer-content a {
+    color: #000080;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1.5em;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer-content a:hover {
+    color: #333;
+    transform: scale(1.2);
+}
+
+.footer-copy {
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.address{
+    font-size: 15px !important;
+}
+
