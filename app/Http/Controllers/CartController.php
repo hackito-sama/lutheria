@@ -10,14 +10,14 @@ class CartController extends Controller
     {
         $cartItems = session()->get('cart', []);
 
-        // Calcular el total del carrito
         $total = array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
         }, $cartItems));
 
-        return view('cart.index', compact('cartItems', 'total'));
-    }
+        $phone = config('services.whatsapp.phone');
 
+        return view('cart.index', compact('cartItems', 'total', 'phone'));
+    }
 
     public function add(Request $request)
     {

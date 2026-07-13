@@ -36,31 +36,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     quantity
                 })
             })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    showToast(`Agregaste ${quantity} ${name} al carrito`, 'success');
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast(`Agregaste ${quantity} ${name} al carrito`, 'success');
 
-                    // actualizar badge del carrito
-                    const cartCountEl = document.querySelector('#cart-count');
-                    if (cartCountEl) {
-                        const cartCount = data.cartCount || 0;
-                        if (cartCount > 0) {
-                            cartCountEl.textContent = cartCount > 99 ? '99+' : cartCount;
-                            cartCountEl.classList.remove('hidden');
-                        } else {
-                            cartCountEl.textContent = '';
-                            cartCountEl.classList.add('hidden');
+                        // actualizar badge del carrito
+                        const cartCountEl = document.querySelector('#cart-count');
+                        if (cartCountEl) {
+                            const cartCount = data.cartCount || 0;
+                            if (cartCount > 0) {
+                                cartCountEl.textContent = cartCount > 99 ? '99+' : cartCount;
+                                cartCountEl.classList.remove('hidden');
+                            } else {
+                                cartCountEl.textContent = '';
+                                cartCountEl.classList.add('hidden');
+                            }
                         }
+                    } else {
+                        showToast('No se pudo agregar el producto', 'error');
                     }
-                } else {
-                    showToast('No se pudo agregar el producto', 'error');
-                }
-            })
-            .catch(err => {
-                console.error(err);
-                showToast('Error al agregar al carrito', 'error');
-            });
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast('Error al agregar al carrito', 'error');
+                });
         });
     });
 });

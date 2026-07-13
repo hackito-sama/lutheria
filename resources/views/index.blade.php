@@ -346,6 +346,6 @@
 @section('scripts')
     @vite('resources/js/product-slider.js')
     <!--vite('resources/js/slider.js')-->
-    @vite('resources/js/cart/cart.js')
+    <!--vite('resources/js/cart/cart.js')-->
     @vite('resources/js/standard-product.js')
 @endsection

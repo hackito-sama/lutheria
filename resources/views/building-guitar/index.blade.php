@@ -10,11 +10,11 @@
     </style>
 
     <div x-data="guitarConfigurator(
-                                                        @js($product),
-                                                        @js($colors),
-                                                        @js($pickups),
-                                                        '{{ config('services.whatsapp.phone') }}'
-                                                    )" class="max-w-5xl mx-auto py-12 px-6">
+                                                                @js($product),
+                                                                @js($colors),
+                                                                @js($pickups),
+                                                                '{{ config('services.whatsapp.phone') }}'
+                                                            )" class="max-w-5xl mx-auto py-12 px-6">
         <h1 class="text-3xl font-bold text-center text-luth-blue mb-8">
             Configura tu guitarra
         </h1>
@@ -111,10 +111,16 @@
                 </div>
 
                 <!-- Botón WhatsApp -->
-                <a :href="whatsappLink" target="_blank"
-                    class="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">
-                    Solicitar cotización por WhatsApp
-                </a>
+                <!--<a :href="whatsappLink" target="_blank"
+                        class="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                        Solicitar cotización por WhatsApp
+                    </a>-->
+
+                <button @click="addToCart"
+                    class="flex items-center justify-center gap-2 w-full bg-luth-blue text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                    <i class="fas fa-shopping-cart"></i>
+                    Agregar al carrito
+                </button>
 
             </div>
         </div>
@@ -154,14 +160,80 @@
                     }).format(this.totalPrice);
                 },
 
-                get whatsappLink() {
+                /*get whatsappLink() {
                     const mensaje = `Hola! Me gustaría solicitar una cotización por la guitarra ${this.model}.
-                                                🎸 Detalles:
-                                                • Color: ${this.selectedColor?.name ?? ''}
-                                                • Pastillas: ${this.pickups}
-                                                • Precio total: ${this.formattedTotal}`;
+                                                        🎸 Detalles:
+                                                        • Color: ${this.selectedColor?.name ?? ''}
+                                                        • Pastillas: ${this.pickups}
+                                                        • Precio total: ${this.formattedTotal}`;
 
                     return `https://wa.me/${phone}?text=${encodeURIComponent(mensaje)}`;
+                },*/
+
+                addToCart() {
+
+                    if (!this.color) {
+                        showToast('Seleccione un color.', 'error');
+                        return;
+                    }
+
+                    if (!this.pickups) {
+                        showToast('Seleccione las pastillas.', 'error');
+                        return;
+                    }
+
+                    fetch('/cart/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: product.id,
+                            name: `${product.name} - ${this.selectedColor.name} - ${this.pickups}`,
+                            price: this.totalPrice,
+                            image: this.selectedColor.images[0] ?? product.image,
+                            quantity: 1,
+
+                            // Datos adicionales si quieres conservar la configuración
+                            options: {
+                                color: this.selectedColor.name,
+                                pickup: this.pickups
+                            }
+                        })
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+
+                            if (data.success) {
+
+                                showToast('Producto agregado al carrito', 'success');
+
+                                const cartCountEl = document.querySelector('#cart-count');
+
+                                if (cartCountEl) {
+                                    const cartCount = data.cartCount || 0;
+
+                                    if (cartCount > 0) {
+                                        cartCountEl.textContent = cartCount > 99 ? '99+' : cartCount;
+                                        cartCountEl.classList.remove('hidden');
+                                    } else {
+                                        cartCountEl.textContent = '';
+                                        cartCountEl.classList.add('hidden');
+                                    }
+                                }
+
+                            } else {
+                                showToast('No se pudo agregar el producto', 'error');
+                            }
+
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            showToast('Error al agregar al carrito', 'error');
+                        });
+
                 },
 
                 updateAdditional(event) {

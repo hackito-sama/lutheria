@@ -35,25 +35,76 @@ function generateSlides() {
 
             card.innerHTML = `
                 <img src="${product.image}" alt="${product.name}" class="w-40 h-40 object-contain rounded-lg mb-4 bg-gray-100">
-                <a href="/products/${product.id}" class="text-lg font-semibold mb-2 text-center text-luth-blue hover:underline">${product.name}</a>
-                <p class="text-xl font-bold text-green-600 mb-4">$${parseFloat(product.price).toFixed(0)}</p>
-                <button 
-                    class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition w-full"
+
+                <a href="/products/${product.id}" class="text-lg font-semibold mb-2 text-center text-luth-blue hover:underline">
+                 ${product.name}
+                </a>
+
+                <p class="text-xl font-bold text-green-600 mb-4">
+                    $${parseFloat(product.price).toFixed(0)}
+                </p>
+
+                <button
+                    type="button"
+                    class="add-to-cart w-full py-3 px-6 text-white font-bold rounded-lg transition-colors duration-200 bg-luth-blue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-luth-blue focus:ring-opacity-50"
                     data-id="${product.id}"
                     data-name="${product.name}"
                     data-price="${product.price}"
-                    data-image="${product.image}"
                     data-stock="${product.stock}"
+                    data-image="${product.image}"
                 >
-                    Consultar por WhatsApp
+                    <i class="fas fa-shopping-cart mr-2"></i> Agregar al Carro
                 </button>
             `;
 
-            const btn = card.querySelector("button");
+            const btn = card.querySelector(".add-to-cart");
             btn.addEventListener("click", () => {
-                sendWhatsAppMessage(product); // 👈 ahora sí funciona
-            });
 
+                fetch('/cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: product.id,
+                        name: product.name,
+                        price: parseFloat(product.price),
+                        image: product.image,
+                        quantity: 1
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+
+                            showToast(`Agregaste ${product.name} al carrito`, 'success');
+
+                            // Actualizar badge del carrito
+                            const cartCountEl = document.querySelector('#cart-count');
+                            if (cartCountEl) {
+                                const cartCount = data.cartCount || 0;
+
+                                if (cartCount > 0) {
+                                    cartCountEl.textContent = cartCount > 99 ? '99+' : cartCount;
+                                    cartCountEl.classList.remove('hidden');
+                                } else {
+                                    cartCountEl.textContent = '';
+                                    cartCountEl.classList.add('hidden');
+                                }
+                            }
+
+                        } else {
+                            showToast('No se pudo agregar el producto', 'error');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        showToast('Error al agregar al carrito', 'error');
+                    });
+
+            });
             grid.appendChild(card);
         });
 

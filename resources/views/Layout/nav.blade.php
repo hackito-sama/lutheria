@@ -19,7 +19,7 @@
 
         </ul>
 
-        <!-- Icono carrito desktop 
+        <!-- Icono carrito desktop -->
         <a href="{{ route('cart.index') }}" class="relative flex items-center">
             <i class="fas fa-shopping-cart text-xl"></i>
 
@@ -33,7 +33,7 @@
                 {{ $cartCount > 0 ? $displayCount : '' }}
             </span>
 
-        </a>-->
+        </a>
 
         <!-- Hamburger mobile -->
         <button id="nav-toggle" class="md:hidden flex flex-col justify-center items-center space-y-1">

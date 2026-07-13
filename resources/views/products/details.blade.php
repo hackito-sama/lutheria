@@ -117,17 +117,17 @@
 
                 {{-- Action Buttons --}}
                 <div class="space-y-4">
-                    <!--<button type="button"
+                    <button type="button"
                         class="add-to-cart w-full py-3 px-6 text-white font-bold rounded-lg transition-colors duration-200 bg-luth-blue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-luth-blue focus:ring-opacity-50"
-                        data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}" data-stock="{{ $product->stock }}"
-                        data-image="{{ $product->image ?? '' }}">
+                        data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}"
+                        data-stock="{{ $product->stock }}" data-image="{{ $product->image ?? '' }}">
                         <i class="fas fa-shopping-cart mr-2"></i> Agregar al Carro
-                    </button>-->
-                    <a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode('Hola, quiero consultar por el producto: ' . $product->name . ' - Precio: $' . $product->price) }}"
-                        target="_blank"
-                        class="w-full py-3 px-6 text-white font-bold rounded-lg transition-colors duration-200 bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
-                        <i class="fab fa-whatsapp mr-2"></i> Consultar por WhatsApp
-                    </a>
+                    </button>
+                    <!--<a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode('Hola, quiero consultar por el producto: ' . $product->name . ' - Precio: $' . $product->price) }}"
+                            target="_blank"
+                            class="w-full py-3 px-6 text-white font-bold rounded-lg transition-colors duration-200 bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                            <i class="fab fa-whatsapp mr-2"></i> Consultar por WhatsApp
+                        </a>-->
                 </div>
             </div>
 

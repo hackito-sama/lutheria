@@ -15,7 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(data => {
                     if (data.success) {
                         showToast(data.message, 'success');
-                        btn.closest('tr').remove();
+                        const row = document.querySelector(`#cart-table button[data-id="${id}"]`)?.closest('tr');
+                        if (row) {
+                            row.remove();
+                        }
+                        const card = document.querySelector(`#card-mobile-${id}`);
+                        if (card) {
+                            card.remove();
+                        }
 
                         const cartCount = document.querySelector('#cart-count');
                         if (cartCount) cartCount.textContent = data.cartCount || 0;
@@ -116,14 +123,29 @@ function updateQuantity(id, quantity, stock = null) {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                // actualizar cantidad en la vista
-                const qtyEl = document.querySelector(`#qty-${id}`);
-                qtyEl.textContent = data.quantity;
+                const qtyDesktop = document.querySelector(`#qty-${id}`);
+                const qtyMobile = document.querySelector(`#qty-mobile-${id}`);
+
+                if (qtyDesktop) {
+                    qtyDesktop.textContent = data.quantity;
+                }
+
+                if (qtyMobile) {
+                    qtyMobile.textContent = data.quantity;
+                }
 
                 // actualizar subtotal del producto
-                const row = qtyEl.closest('tr');
+                const row = qtyDesktop.closest('tr');
                 if (row) {
                     row.querySelector('td:nth-child(4)').textContent =
+                        `$${data.itemTotal.toLocaleString('es-CL')}`;
+                }
+
+                const subtotalMobile =
+                    document.querySelector(`#subtotal-mobile-${id}`);
+
+                if (subtotalMobile) {
+                    subtotalMobile.textContent =
                         `$${data.itemTotal.toLocaleString('es-CL')}`;
                 }
 
