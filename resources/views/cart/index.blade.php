@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('Layout.app')
 
 @section('content')
     <section class="py-16 bg-gray-100">
