@@ -10,11 +10,11 @@
     </style>
 
     <div x-data="guitarConfigurator(
-                                                                @js($product),
-                                                                @js($colors),
-                                                                @js($pickups),
-                                                                '{{ config('services.whatsapp.phone') }}'
-                                                            )" class="max-w-5xl mx-auto py-12 px-6">
+                                                                    @js($product),
+                                                                    @js($colors),
+                                                                    @js($pickups),
+                                                                    '{{ config('services.whatsapp.phone') }}'
+                                                                )" class="max-w-5xl mx-auto py-12 px-6">
         <h1 class="text-3xl font-bold text-center text-luth-blue mb-8">
             Configura tu guitarra
         </h1>
@@ -112,9 +112,9 @@
 
                 <!-- Botón WhatsApp -->
                 <!--<a :href="whatsappLink" target="_blank"
-                        class="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">
-                        Solicitar cotización por WhatsApp
-                    </a>-->
+                            class="flex items-center justify-center gap-2 w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                            Solicitar cotización por WhatsApp
+                        </a>-->
 
                 <button @click="addToCart"
                     class="flex items-center justify-center gap-2 w-full bg-luth-blue text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">
@@ -182,6 +182,26 @@
                         return;
                     }
 
+                    const body = {
+                        id: product.id,
+                        name: `${product.name} - ${this.selectedColor.name} - ${this.pickups}`,
+                        price: this.totalPrice,
+                        image: this.selectedColor.images[0] ?? product.image,
+                        quantity: 1,
+                        options: {
+                            color: this.selectedColor.name,
+                            pickup: this.pickups
+                        }
+                    };
+
+                    // Solo enviamos variant si realmente existen opciones
+                    if (this.selectedColor && this.pickups) {
+                        body.variant = JSON.stringify({
+                            color: this.selectedColor.name,
+                            pickup: this.pickups
+                        });
+                    }
+
                     fetch('/cart/add', {
                         method: 'POST',
                         headers: {
@@ -189,19 +209,7 @@
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify({
-                            id: product.id,
-                            name: `${product.name} - ${this.selectedColor.name} - ${this.pickups}`,
-                            price: this.totalPrice,
-                            image: this.selectedColor.images[0] ?? product.image,
-                            quantity: 1,
-
-                            // Datos adicionales si quieres conservar la configuración
-                            options: {
-                                color: this.selectedColor.name,
-                                pickup: this.pickups
-                            }
-                        })
+                        body: JSON.stringify(body)
                     })
                         .then(res => res.json())
                         .then(data => {

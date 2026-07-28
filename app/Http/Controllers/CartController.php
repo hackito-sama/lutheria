@@ -21,39 +21,51 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-        $id = $request->id;
-        $name = $request->name;
-        $price = $request->price;
-        $quantity = (int) $request->quantity; // <--- importante
-        $image = $request->image ?? '';
+        $productId = $request->id;
+        $variant = $request->variant;
+
+        // Si hay variante, usamos una clave única.
+        // Si no, mantenemos el comportamiento antiguo.
+        $key = $variant
+            ? $productId . '_' . md5($variant)
+            : $productId;
 
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity'] += $quantity; // sumar la cantidad
+        $quantity = (int) $request->quantity;
+        $name = $request->name;
+        $price = $request->price;
+        $image = $request->image ?? '';
+
+        if (isset($cart[$key])) {
+
+            $cart[$key]['quantity'] += $quantity;
+
         } else {
-            $cart[$id] = [
+
+            $cart[$key] = [
+                'product_id' => $productId,
+                'variant' => $variant,
                 'name' => $name,
                 'price' => $price,
                 'quantity' => $quantity,
                 'image' => $image,
                 'stock' => $request->stock ?? 999,
+                'options' => $request->options ?? [],
             ];
+
         }
 
         session()->put('cart', $cart);
 
-        // calcular cantidad total del carrito
         $cartCount = array_sum(array_column($cart, 'quantity'));
 
         return response()->json([
             'success' => true,
             'cartCount' => $cartCount,
-            'message' => "Producto agregado correctamente"
+            'message' => 'Producto agregado correctamente'
         ]);
     }
-
-
 
     public function remove($id)
     {

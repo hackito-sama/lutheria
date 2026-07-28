@@ -19,6 +19,7 @@
                         </thead>
                         <tbody>
                             @foreach($cartItems as $id => $item)
+                            
                                 <tr class="border-b text-gray-600">
                                     <td class="py-2 text-luth-blue">
                                         <a href="{{ route('products.show', $id) }}"

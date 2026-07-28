@@ -83,6 +83,7 @@ document.addEventListener('click', (e) => {
     const dec = e.target.closest('.decrease-qty');
     const inc = e.target.closest('.increase-qty');
 
+
     if (dec) {
         const id = dec.dataset.id;
         const qtyEl = document.querySelector(`#qty-${id}`);

@@ -4,48 +4,60 @@
 
     <!--<section class="w-screen relative overflow-hidden h-80 md:h-96">
 
-                                                                    @foreach($sliders as $index => $slider)
-                                                                        <div
-                                                                            class="slide absolute inset-0 transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}">
-                                                                            <img src="{{ asset($slider->url) }}" class="w-full h-full object-cover">
-                                                                        </div>
-                                                                    @endforeach
+                                                                        @foreach($sliders as $index => $slider)
+                                                                            <div
+                                                                                class="slide absolute inset-0 transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}">
+                                                                                <img src="{{ asset($slider->url) }}" class="w-full h-full object-cover">
+                                                                            </div>
+                                                                        @endforeach
 
-                                                                    <button id="prev"
-                                                                        class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white px-4 py-2 rounded z-10">❮</button>
-                                                                    <button id="next"
-                                                                        class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white px-4 py-2 rounded z-10">❯</button>
-                                                                </section>-->
+                                                                        <button id="prev"
+                                                                            class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white px-4 py-2 rounded z-10">❮</button>
+                                                                        <button id="next"
+                                                                            class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white px-4 py-2 rounded z-10">❯</button>
+                                                                    </section>-->
 
     <!-- Sección: Quiénes somos -->
-    <section class="py-16 shadow-sm rounded-lg bg-gray-100">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
-            <!-- Descripción -->
-            <div class="md:w-1/2">
-                <h2 class="text-3xl font-bold mb-4 text-luth-blue">Quiénes somos</h2>
-                <h3 class="text-gray-900 mb-4">Nuestra pasión por la excelencia nos ha impulsado desde el principio y
-                    continúa propulsándonos hacia
-                    adelante.</h3>
-                <p class="text-gray-700 mb-4">
+    <section class="py-16 bg-gray-100 shadow-sm rounded-lg overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-10">
 
+                <!-- Descripción -->
+                <div class="w-full lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-4 text-luth-blue">
+                        Quiénes somos
+                    </h2>
 
-                    <strong>Luthé</strong> es una empresa chilena fundada con el objetivo de ofrecer productos de alta
-                    calidad,
-                    cuidadosamente desarrollados y adecuados para todos. Entendemos que cada instrumento es importante y nos
-                    esforzamos para hacer que la experiencia de compra sea tan gratificante como sea posible.
+                    <h3 class="text-gray-900 mb-4">
+                        Nuestra pasión por la excelencia nos ha impulsado desde el principio y continúa propulsándonos hacia
+                        adelante.
+                    </h3>
 
-                    Nos especializamos en la construcción artesanal de guitarras y bajos, incluyendo innovadores diseños
-                    headless, todos fabricados con maderas chilenas de la más alta calidad.
-                </p>
-            </div>
-            <!-- Video -->
-            <div class="md:w-1/2">
-                <div class="aspect-w-16 aspect-h-9">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/0F5XPG5qNys?si=4YwJ2EWcYXrSy9uO"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <p class="text-gray-700 leading-7">
+                        <strong>Luthé</strong> es una empresa chilena fundada con el objetivo de ofrecer productos de alta
+                        calidad,
+                        cuidadosamente desarrollados y adecuados para todos.
+
+                        Entendemos que cada instrumento es importante y nos esforzamos para hacer que la experiencia de
+                        compra sea tan gratificante como sea posible.
+
+                        Nos especializamos en la construcción artesanal de guitarras y bajos, incluyendo innovadores diseños
+                        headless,
+                        todos fabricados con maderas chilenas de la más alta calidad.
+                    </p>
                 </div>
+
+                <!-- Video -->
+                <div class="w-full lg:w-1/2">
+                    <div class="aspect-video w-full overflow-hidden rounded-xl shadow-lg">
+                        <iframe class="h-full w-full" src="https://www.youtube.com/embed/0F5XPG5qNys?si=4YwJ2EWcYXrSy9uO"
+                            title="YouTube video player"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -235,8 +247,8 @@
                                             Mas Detalles
                                         </button>
                                         <!--<button class="border text-luth-blue px-4 py-2 rounded hover:bg-gray-100 transition">
-                                            Ver Detalles
-                                        </button>-->
+                                                    Ver Detalles
+                                                </button>-->
                                     </div>
                                 </div>
                             </div>
